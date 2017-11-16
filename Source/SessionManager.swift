@@ -257,7 +257,7 @@ open class SessionManager {
             let originalTask = DataRequest.Requestable(urlRequest: originalRequest!)
 
             let task = try originalTask.task(session: session, adapter: adapter, queue: queue)
-            let request = DataRequest(session: session, requestTask: .data(originalTask, task))
+            let request = DataRequest(session: session, requestTask: .upload(originalTask, task))
 
             delegate[task] = request
 
@@ -276,7 +276,7 @@ open class SessionManager {
 
         if let urlRequest = urlRequest {
             let originalTask = DataRequest.Requestable(urlRequest: urlRequest)
-            requestTask = .data(originalTask, nil)
+            requestTask = .upload(originalTask, nil)
         }
 
         let underlyingError = error.underlyingAdaptError ?? error

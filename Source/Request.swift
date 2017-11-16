@@ -414,6 +414,12 @@ open class DataRequest: Request {
         dataDelegate.progressHandler = (closure, queue)
         return self
     }
+    
+    @discardableResult
+    open func uploadProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping ProgressHandler) -> Self {
+        (delegate as? UploadTaskDelegate)?.uploadProgressHandler = (closure, queue)
+        return self
+    }
 }
 
 // MARK: -
@@ -618,7 +624,7 @@ open class UploadRequest: DataRequest {
     ///
     /// - returns: The request.
     @discardableResult
-    open func uploadProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping ProgressHandler) -> Self {
+    open override func uploadProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping ProgressHandler) -> Self {
         uploadDelegate.uploadProgressHandler = (closure, queue)
         return self
     }
